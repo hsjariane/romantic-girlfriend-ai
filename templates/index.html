@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sofia ❤️ - Your Romantic AI Girlfriend</title>
+</head>
+<body>
+  <h2>Sofia ❤️</h2>
+  <div id="chat"></div>
+  <input type="text" id="message" placeholder="Say something to Sofia..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    async function sendMessage() {
+      const message = document.getElementById("message").value;
+      document.getElementById("chat").innerHTML += `<p><b>You:</b> ${message}</p>`;
+      
+      const response = await fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message})
+      });
+
+      const data = await response.json();
+      document.getElementById("chat").innerHTML += `<p><b>Sofia:</b> ${data.reply}</p>`;
+      document.getElementById("message").value = "";
+    }
+  </script>
+</body>
+</html>
